@@ -8,6 +8,8 @@ public class Enemy01Controller : MonoBehaviour
     [SerializeField] private Renderer renderer;
     //speedを取得
     [SerializeField] private float speed;
+    //
+    [SerializeField] private int hitPoint;
     //フラグ宣言
     private bool isMove;//
     private bool isFind;//視認
@@ -20,10 +22,13 @@ public class Enemy01Controller : MonoBehaviour
         Idle,
         Move,
         Attack,
-        Deth,
+        Death,
 
     };
     Phase phase = Phase.Idle;
+
+    //カプセル化処理
+    public int HitPoint { get => hitPoint; /*set => hitPoint = value;*/ }
 
     void Update()
     {
@@ -45,7 +50,7 @@ public class Enemy01Controller : MonoBehaviour
                 break;
             case Phase.Attack:
                 break; 
-            case Phase.Deth:
+            case Phase.Death:
                 break;
             default: 
                 break;
@@ -60,7 +65,8 @@ public class Enemy01Controller : MonoBehaviour
 
         if (isFind) { phase = Phase.Move; }
     }
-    //
+
+    //--------------------　ここから動作処理　--------------------//
     private void move()
     {
 
@@ -75,6 +81,12 @@ public class Enemy01Controller : MonoBehaviour
         }
     }
 
+    //--------------------　ここまで動作処理　--------------------//
+
+    private void death()
+    {
+
+    }
     //視界に入っているかを判断してフラグ操作をするメソッド
     private void isFindHundle()
     {
