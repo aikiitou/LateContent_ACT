@@ -34,8 +34,8 @@ public class PlayerController : MonoBehaviour
 
     // 攻撃用
     [SerializeField] private GameObject attackEffect = null; // 攻撃エフェクトのゲームオブジェクト格納変数
-    private float atkTimer = 0.0f;
-    private bool isAttack = false;
+    private float atkTimer = 0.0f; // 前回攻撃してから何秒立ったかのタイマー
+    private bool isAttack = false; // 今アタックしているかどうかのフラグ
 
 
     // Start is called before the first frame update
@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
 
         // 攻撃
         atkTimer += Time.deltaTime;
-        if (Gamepad.current.buttonEast.isPressed)
+        if (Gamepad.current.buttonEast.isPressed) // 右ボタが押されたらで攻撃
         {
             Attack();
         }
@@ -117,11 +117,12 @@ public class PlayerController : MonoBehaviour
         rb2D.AddForce(Vector2.up * jump, ForceMode2D.Impulse);
     }
 
-    private void Attack()
+    private void Attack() // 攻撃
     {
+        // 前回攻撃してからの時間がインターバルを超えていたら
         if (atkTimer > ATTACKINTERVAL)
         {
-            attackEffect.SetActive(true);
+            attackEffect.SetActive(true); // 攻撃エフェクトの生成
             atkTimer = 0.0f;
         }
     }
