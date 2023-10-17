@@ -8,10 +8,17 @@ public class Enemy01Controller : MonoBehaviour
     [SerializeField] private Renderer renderer;
     //speedを取得
     [SerializeField] private float speed;
+    //
+    [SerializeField] private int hitPoint;
+    //
+    [SerializeField] private GameObject player;
+    //
+    private float distance;
+
     //フラグ宣言
-    private bool isMove;//
-    private bool isFind;//視認
-    private bool isDeath;//死亡
+    private bool isMove;    //
+    private bool isFind;    //視認
+    private bool isDeath;   //死亡
 
     //列挙型Phaseの宣言
     private enum Phase 
@@ -20,16 +27,19 @@ public class Enemy01Controller : MonoBehaviour
         Idle,
         Move,
         Attack,
-        Deth,
+        Death,
 
     };
     Phase phase = Phase.Idle;
+
+    //カプセル化処理
+    public int HitPoint { get => hitPoint; /*set => hitPoint = value;*/ }
 
     void Update()
     {
         //
         hundlePhase();
-        
+
     }
 
     //phase切り替え処理
@@ -45,7 +55,7 @@ public class Enemy01Controller : MonoBehaviour
                 break;
             case Phase.Attack:
                 break; 
-            case Phase.Deth:
+            case Phase.Death:
                 break;
             default: 
                 break;
@@ -60,13 +70,16 @@ public class Enemy01Controller : MonoBehaviour
 
         if (isFind) { phase = Phase.Move; }
     }
-    //
+
+    //--------------------　ここから動作処理　--------------------//
     private void move()
     {
-
-        transform.Translate(-speed * Time.deltaTime, 0.0f, 0.0f);
+        // ガゼル
+        //transform.Translate(-speed * Time.deltaTime, 0.0f, 0.0f);
 
         isFindHundle();
+
+        isPress();
 
         //見えなくなったらIdleに
         if (!isFind)
@@ -75,10 +88,30 @@ public class Enemy01Controller : MonoBehaviour
         }
     }
 
+    //--------------------　ここまで動作処理　--------------------//
+
+    private void death()
+    {
+
+    }
+
     //視界に入っているかを判断してフラグ操作をするメソッド
     private void isFindHundle()
     {
         if (renderer.isVisible) { isFind = true; }
         else { isFind = false; }
+    }
+
+    private void isPress()
+    {
+        Debug.Log(distance);
+
+        if (distance < 5) 
+        {
+
+
+
+        }
+
     }
 }
