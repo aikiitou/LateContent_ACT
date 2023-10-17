@@ -10,10 +10,15 @@ public class Enemy01Controller : MonoBehaviour
     [SerializeField] private float speed;
     //
     [SerializeField] private int hitPoint;
+    //
+    [SerializeField] private GameObject player;
+    //
+    private float distance;
+
     //ƒtƒ‰ƒOéŒ¾
-    private bool isMove;//
-    private bool isFind;//‹”F
-    private bool isDeath;//€–S
+    private bool isMove;    //
+    private bool isFind;    //‹”F
+    private bool isDeath;   //€–S
 
     //—ñ‹“Œ^Phase‚ÌéŒ¾
     private enum Phase 
@@ -34,7 +39,7 @@ public class Enemy01Controller : MonoBehaviour
     {
         //
         hundlePhase();
-        
+
     }
 
     //phaseØ‚è‘Ö‚¦ˆ—
@@ -69,10 +74,12 @@ public class Enemy01Controller : MonoBehaviour
     //--------------------@‚±‚±‚©‚ç“®ìˆ—@--------------------//
     private void move()
     {
-
-        transform.Translate(-speed * Time.deltaTime, 0.0f, 0.0f);
+        // ƒKƒ[ƒ‹
+        //transform.Translate(-speed * Time.deltaTime, 0.0f, 0.0f);
 
         isFindHundle();
+
+        isPress();
 
         //Œ©‚¦‚È‚­‚È‚Á‚½‚çIdle‚É
         if (!isFind)
@@ -87,10 +94,24 @@ public class Enemy01Controller : MonoBehaviour
     {
 
     }
+
     //‹ŠE‚É“ü‚Á‚Ä‚¢‚é‚©‚ğ”»’f‚µ‚Äƒtƒ‰ƒO‘€ì‚ğ‚·‚éƒƒ\ƒbƒh
     private void isFindHundle()
     {
         if (renderer.isVisible) { isFind = true; }
         else { isFind = false; }
+    }
+
+    private void isPress()
+    {
+        Debug.Log(distance);
+
+        if (distance < 5) 
+        {
+
+
+
+        }
+
     }
 }
