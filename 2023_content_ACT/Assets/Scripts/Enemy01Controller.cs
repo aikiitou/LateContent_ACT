@@ -33,7 +33,9 @@ public class Enemy01Controller : MonoBehaviour
     Phase phase = Phase.Idle;
 
     //カプセル化処理
-    public int HitPoint { get => hitPoint; /*set => hitPoint = value;*/ }
+    public int GetEnemy01Hp() { return this.hitPoint; }
+    //BatのHitPointを他クラスで変更できるように
+    public void SetEnemy01Hp(int val) { this.hitPoint = val; }
 
     void Update()
     {
@@ -75,7 +77,7 @@ public class Enemy01Controller : MonoBehaviour
     private void move()
     {
         // ガゼル
-        //transform.Translate(-speed * Time.deltaTime, 0.0f, 0.0f);
+        transform.Translate(-speed * Time.deltaTime, 0.0f, 0.0f);
 
         isFindHundle();
 
@@ -90,10 +92,6 @@ public class Enemy01Controller : MonoBehaviour
 
     //--------------------　ここまで動作処理　--------------------//
 
-    private void death()
-    {
-
-    }
 
     //視界に入っているかを判断してフラグ操作をするメソッド
     private void isFindHundle()
