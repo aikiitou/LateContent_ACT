@@ -21,6 +21,13 @@ public class PlayerController : MonoBehaviour
     private const float NORMALANGEL = 0.0f;
     private const float REVERSALANGLE = 180.0f;
 
+    // スタミナ用
+    private const float STARTSTAMINA = 100.0f;
+    private const float WALKDECSTAMINA = 2.0f;
+    private const float DASHDECSTAMINA = 6.0f;
+    private const float JUMPDECSTAMINA = 6.0f;
+    private const float ATTACKDECSTAMINA = 8.0f;
+    private const float ONESECONDS = 1.0f;
 
     // 変数
 
@@ -49,6 +56,13 @@ public class PlayerController : MonoBehaviour
     private bool isAttack = false; // アタックの入力があったかどうかのフラグ
     private bool isAttacking = false;　// 攻撃中かどうかのフラグ
 
+    // スタミナ用
+    [SerializeField]
+    private GameObject slider = null;
+    private StaminaSliderController sliderController = null;
+    private float staminaValue = 0.0f;
+    private float moveTime = 0.0f; 
+
     //　関数
     private void RunSwiching() // 移動モードの切り替え
     {
@@ -66,17 +80,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Move(float _walk, float _dash) // 移動
+    private void Move(float _walk, float _dash, float _dec_walk, float _dec_dash) // 移動
     {
         float speed;
+        float decStamina;
 
         if(isDash)
         {
             speed = _dash;
+            decStamina = _dec_dash;
         }
         else
         {
             speed = _walk;
+            decStamina = _dec_walk;
         }
         input.x = Gamepad.current.leftStick.x.value; // ゲームパッドの左スティックの横軸の値の読み取り
         clampedInput = Vector2.ClampMagnitude(input, 1.0f); // 読み取った値に制限をかける
@@ -86,6 +103,11 @@ public class PlayerController : MonoBehaviour
         velocity = velocity - rb2D.velocity;
         velocity = new Vector3(Mathf.Clamp(velocity.x, -speed, speed), 0.0f);
 
+        if (clampedInput != Vector2.zero)
+        {
+            staminaValue -= decStamina * Time.deltaTime;
+            sliderController.GetStaminaValue(staminaValue);
+        }
     }
 
     private void Jump() // ジャンプ
@@ -93,6 +115,8 @@ public class PlayerController : MonoBehaviour
         Debug.Log("jump"); // デバッグ用
         isJump = true;
         rb2D.AddForce(Vector2.up * jump, ForceMode2D.Impulse);
+        staminaValue -= JUMPDECSTAMINA;
+        sliderController.GetStaminaValue(staminaValue);
     }
 
     private void AngleChange()
@@ -121,9 +145,10 @@ public class PlayerController : MonoBehaviour
             isAttacking = true;
             attackEffect.SetActive(true); // 攻撃エフェクトの表示
             atkInterbalTimer = 0.0f;
+            staminaValue -= ATTACKDECSTAMINA;
+            sliderController.GetStaminaValue(staminaValue);
         }
     }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Grand") // 着地の判定
@@ -136,7 +161,9 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        sliderController = slider.GetComponent<StaminaSliderController>();
         rb2D = GetComponent<Rigidbody2D>();
+        staminaValue = STARTSTAMINA;
     }
 
     // Update is called once per frame
@@ -148,7 +175,7 @@ public class PlayerController : MonoBehaviour
 
         RunSwiching(); // 移動モードの切り替え
 
-        Move(WALKSPEED, DASHSPEED); // 移動
+        Move(WALKSPEED, DASHSPEED, WALKDECSTAMINA, DASHDECSTAMINA); // 移動
 
         AngleChange();　// 方向変換
 
@@ -171,6 +198,12 @@ public class PlayerController : MonoBehaviour
         {
             isAttack = false;
             isAttacking = false;
+        }
+
+        if(Gamepad.current.leftStick.value == Vector2.zero
+            && isJump == false && isAttack == false)
+        {
+
         }
     }
 
