@@ -12,8 +12,7 @@ public class StaminaSliderController : MonoBehaviour
 
     public void GetStaminaValue(float _stamina)
     {
-        currentStamina = _stamina;
-        slider.value = currentStamina;
+        currentStamina = _stamina;  
     }
     // Start is called before the first frame update
     void Start()
@@ -24,5 +23,6 @@ public class StaminaSliderController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       slider.value = currentStamina;
     }
 }
