@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,12 +23,14 @@ public class PlayerController : MonoBehaviour
     private const float REVERSALANGLE = 180.0f;
 
     // スタミナ用
-    private const float STARTSTAMINA = 100.0f;
+    private const float STARTSTAMINA = 400.0f;
     private const float WALKDECSTAMINA = 2.0f;
     private const float DASHDECSTAMINA = 6.0f;
     private const float JUMPDECSTAMINA = 6.0f;
     private const float ATTACKDECSTAMINA = 8.0f;
     private const float ONESECONDS = 1.0f;
+    private const float ADDSTAMINABIG = 50.0f;
+    private const float ADDSTAMINAMIN = 20;
 
     // 変数
 
@@ -149,6 +152,19 @@ public class PlayerController : MonoBehaviour
             sliderController.GetStaminaValue(staminaValue);
         }
     }
+
+    public void AddStamina(GameObject obj) // スタミナの回復
+    {
+        if(obj.tag == "Item_Big")
+        {
+            staminaValue += ADDSTAMINABIG;
+        }
+        else if(obj.tag == "Item_Min")
+        {
+            staminaValue += ADDSTAMINAMIN;
+        }
+        sliderController.GetStaminaValue(staminaValue);
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Grand") // 着地の判定
@@ -157,7 +173,6 @@ public class PlayerController : MonoBehaviour
             Debug.Log("isJump=false"); // デバッグ用
         }
     }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -198,12 +213,6 @@ public class PlayerController : MonoBehaviour
         {
             isAttack = false;
             isAttacking = false;
-        }
-
-        if(Gamepad.current.leftStick.value == Vector2.zero
-            && isJump == false && isAttack == false)
-        {
-
         }
     }
 
