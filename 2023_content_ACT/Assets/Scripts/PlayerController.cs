@@ -22,7 +22,8 @@ public class PlayerController : MonoBehaviour
     private const float REVERSALANGLE = 180.0f;
 
     // スタミナ用
-    private const float STARTSTAMINA = 100.0f;
+    private const float STARTSTAMINA = 400.0f;
+    private const float STAMINAMAX = 100.0f;
     private const float WALKDECSTAMINA = 2.0f;
     private const float DASHDECSTAMINA = 6.0f;
     private const float JUMPDECSTAMINA = 6.0f;
@@ -149,6 +150,20 @@ public class PlayerController : MonoBehaviour
             sliderController.GetStaminaValue(staminaValue);
         }
     }
+    public void AddStamina(float value)
+    {
+        staminaValue += value;
+    }
+
+    private void StaminaLimit()
+    {
+        if(staminaValue > STAMINAMAX)
+        {
+            staminaValue = STAMINAMAX;
+            sliderController.GetStaminaValue(staminaValue);
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Grand") // 着地の判定
@@ -200,11 +215,8 @@ public class PlayerController : MonoBehaviour
             isAttacking = false;
         }
 
-        if(Gamepad.current.leftStick.value == Vector2.zero
-            && isJump == false && isAttack == false)
-        {
-
-        }
+        // スタミナ関連
+        StaminaLimit();
     }
 
     private void FixedUpdate()
