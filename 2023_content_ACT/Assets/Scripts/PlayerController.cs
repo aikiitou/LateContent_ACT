@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     private const float REVERSALANGLE = 180.0f;
 
     // スタミナ用
-    private const float STARTSTAMINA = 100.0f;
+    private const float STARTSTAMINA = 400.0f;
     private const float STAMINAMAX = 100.0f;
     private const float WALKDECSTAMINA = 2.0f;
     private const float DASHDECSTAMINA = 6.0f;
