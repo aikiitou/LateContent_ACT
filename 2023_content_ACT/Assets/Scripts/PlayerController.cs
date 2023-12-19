@@ -28,7 +28,6 @@ public class PlayerController : MonoBehaviour
     private const float DASHDECSTAMINA = 6.0f;
     private const float JUMPDECSTAMINA = 6.0f;
     private const float ATTACKDECSTAMINA = 8.0f;
-    private const float ONESECONDS = 1.0f;
 
     // ïœêî
 
