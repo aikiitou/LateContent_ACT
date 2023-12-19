@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
 
     // スタミナ用
     private const float STARTSTAMINA = 400.0f;
-    private const float STAMINAMAX = 100.0f;
+    private const float STAMINAMAX = 400.0f;
     private const float WALKDECSTAMINA = 2.0f;
     private const float DASHDECSTAMINA = 6.0f;
     private const float JUMPDECSTAMINA = 6.0f;
