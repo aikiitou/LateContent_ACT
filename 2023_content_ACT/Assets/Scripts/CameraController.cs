@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     private const float MIN_LENGTH = 2.5f;
+    private const float MAX_LENGTH = 6.5f;
 
     [SerializeField]
     private GameObject player_object;
@@ -31,6 +32,11 @@ public class CameraController : MonoBehaviour
         if (current_length < MIN_LENGTH)
         {
             transform.position = new Vector3(player_pos.x + MIN_LENGTH,camera_pos.y,camera_pos.z);
+        }
+
+        if(current_length > MAX_LENGTH)
+        {
+            transform.position = new Vector3(player_pos.x + MAX_LENGTH, camera_pos.y, camera_pos.z);
         }
     }
 }
