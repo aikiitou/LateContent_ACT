@@ -11,8 +11,8 @@ public class PlayerController : MonoBehaviour
     // 定数
 
     // 移動用
-    private const float WALKSPEED = 2.0f; // 歩行時のスピード
-    private const float DASHSPEED = 4.0f; // ダッシュ時のスピード
+    private const float WALKSPEED = 4.0f; // 歩行時のスピード
+    private const float DASHSPEED = 8.0f; // ダッシュ時のスピード
 
     // 攻撃用
     private const float ATTACKINTERVAL = 0.2f; // 攻撃の間隔
